@@ -1,19 +1,26 @@
 package dio.springboot;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
-public class Main {
+import com.google.gson.Gson;
+import dio.springboot.app.ConversorJson;
+import dio.springboot.app.ViaCepResponse;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
+@SpringBootApplication
+public class SpringPrimeirosPassosApplication {
+
     public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
-
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            System.out.println("i = " + i);
-        }
+        SpringApplication.run(SpringPrimeirosPassosApplication.class, args);
     }
+    @Bean
+    public CommandLineRunner run(ConversorJson conversor) throws Exception {
+        return args -> {
+            String json = "{\"cep\": \"01001-000\",\"logradouro\": \"Praça da Sé\",\"localidade\": \"São Paulo\"}";
+            ViaCepResponse response = conversor.converter(json);
+            System.out.println("Dados do CEP: " + response);
+        };
+    }
+
 }
